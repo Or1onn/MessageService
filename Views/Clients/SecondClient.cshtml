@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Messages</title>
+</head>
+<body>
+<h1>Real-Time Messages</h1>
+<ul id="messagesList"></ul>
+
+<script>
+  const socket = new WebSocket(`ws://${window.location.host}/ws`);
+
+  socket.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    const listItem = document.createElement('li');
+    listItem.textContent = `${message.Timestamp} - ${message.SequenceNumber}: ${message.Text}`;
+    document.getElementById('messagesList').appendChild(listItem);
+  };
+</script>
+</body>
+</html>

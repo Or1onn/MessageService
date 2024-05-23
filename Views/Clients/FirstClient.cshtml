@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Sender</title>
+</head>
+<body>
+<h1>Send a Message</h1>
+<form id="messageForm">
+    <input type="text" id="messageText" placeholder="Enter your message" maxlength="128" required>
+    <input type="number" id="sequenceNumber" placeholder="Sequence Number" required>
+    <button type="submit">Send</button>
+</form>
+
+<script>
+    document.getElementById('messageForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const messageText = document.getElementById('messageText').value;
+        const sequenceNumber = document.getElementById('sequenceNumber').value;
+
+        await fetch('/api/Messages/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: messageText, sequenceNumber: parseInt(sequenceNumber) })
+        });
+
+        document.getElementById('messageForm').reset();
+    });
+</script>
+</body>
+</html>
